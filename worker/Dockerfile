@@ -29,7 +29,8 @@ RUN         apt-get update && \
     python3-dev \
     libffi-dev \
     libssl-dev \
-    python3-setuptools \
+    python3-setuptools \ 
+    python3-pip \
     curl && \
     rm -rf /var/lib/apt/lists/* && \
     # Test runs produce a great quantity of dead grandchild processes.  In a
@@ -37,16 +38,15 @@ RUN         apt-get update && \
     # so we need to simulate that here.  See https://github.com/Yelp/dumb-init
     curl https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64.deb -Lo /tmp/init.deb && dpkg -i /tmp/init.deb &&\
     # ubuntu pip version has issues so we should use the official upstream version it: https://github.com/pypa/pip/pull/3287
-    easy_install3 pip && \
     # Install required python packages, and twisted
-    pip --no-cache-dir install 'twisted[tls]' && \
+    pip3 --no-cache-dir install 'twisted[tls]' && \
     mkdir /buildbot &&\
     useradd -ms /bin/bash buildbot
 
 COPY . /usr/src/buildbot-worker
-COPY docker/buildbot.tac /buildbot/buildbot.tac
+COPY buildbot.tac /buildbot/buildbot.tac
 
-RUN pip3 install /usr/src/buildbot-worker && \
+RUN pip3 install buildbot-worker && \
     chown -R buildbot /buildbot
 
 USER buildbot
