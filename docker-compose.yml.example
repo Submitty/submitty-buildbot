@@ -1,12 +1,13 @@
-version: '2'
+version: '3'
 services:
   buildbot:
     image: buildbot/buildbot-master:master
+    container_name: buildbot-master
     env_file:
-      - db.env
+      - .env
     environment:
       - BUILDBOT_CONFIG_DIR=config
-      - BUILDBOT_CONFIG_URL=https://github.com/Submitty/submitty-buildbot/tree/master/master/master.cfg
+      - BUILDBOT_CONFIG_URL=https://raw.githubusercontent.com/Submitty/submitty-buildbot/master/master/master.cfg?token=ADNHRT5OG6BAY4FHS6N7P3S47FKQM
       - BUILDBOT_WORKER_PORT=9989
       - BUILDBOT_WEB_URL=http://localhost:8010/
       - BUILDBOT_WEB_PORT=tcp:port=8010
@@ -17,15 +18,18 @@ services:
     ports:
       - "8010:8010"
   db:
-    env_file:
-      - db.env
     image: "postgres:9.4"
+    container_name: buildbot-database
+    env_file:
+      - .env
     expose:
       - 5432
 
   worker:
-    build: .
-    image: "php-buildbot:latest"
+    build:
+        context: worker
+        dockerfile: Dockerfile
+    container_name: buildbot-worker
     environment:
       BUILDMASTER: buildbot
       BUILDMASTER_PORT: 9989
