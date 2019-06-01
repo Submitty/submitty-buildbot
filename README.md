@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://submitty.org/images/submitty_logo.png" alt="Submitty Logo" width="500px"/>
+ <img src="https://buildbot.net/img/nut.svg" alt="Buildbot Icon" height="100"> <img src="https://submitty.org/images/submitty_logo.png" alt="Submitty Logo" width="200px"/>
 </p>
 
 
@@ -32,6 +32,9 @@ In order to run this CI server on you local machine you would have to complete t
 3. Create local version of `docker-compose.yml`
    
    `cp .docker-compose.yml.example docker-compose.yml`
+4. Build images
+   
+   `docker-compose up --build`
 
 #### Customize
 
@@ -50,8 +53,11 @@ In order to run this CI server on you local machine you would have to complete t
         WORKERNAME: php-docker-worker
         WORKERPASS: pass
    ```
-- You may update the database credentials the enviroment(`.env`) file 
-- You may update the 
+- You may update the database credentials in the enviroment(`.env`) file 
+- You may update the master config source in the `docker-compose.yml` 
+  
+More details about `master.cfg` configs here : https://docs.buildbot.net/
+
 
 
 ## Key Features
