@@ -28,15 +28,29 @@ services:
     expose:
       - 5432
 
-  worker:
+  php-worker:
     build:
-        context: worker
+        context: worker/php
         dockerfile: Dockerfile
-    container_name: buildbot-worker
+    container_name: php-buildbot-worker
     environment:
       BUILDMASTER: buildbot
       BUILDMASTER_PORT: 9989
-      WORKERNAME: php-docker-worker
+      WORKERNAME: php-buildbot-worker
+      WORKERPASS: pass
+      WORKER_ENVIRONMENT_BLACKLIST: DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST
+
+    links:
+      - buildbot
+  python-worker:
+    build:
+        context: worker/python
+        dockerfile: Dockerfile
+    container_name: python-buildbot-worker
+    environment:
+      BUILDMASTER: buildbot
+      BUILDMASTER_PORT: 9989
+      WORKERNAME: python-docker-worker
       WORKERPASS: pass
       WORKER_ENVIRONMENT_BLACKLIST: DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST
 
