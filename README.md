@@ -10,12 +10,17 @@ Buildbot CI/CD configuration for Submitty.
 ```
 ├── master
 │   └── master.cfg
-├── worker
-│   ├── buildbot.tac
-│   └── Dockerfile
+├── workers
+│   ├── php
+│   │   ├── buildbot.tac
+│   │   └── Dockerfile
+│   └── python
+│       ├── buildbot.tac
+│       └── Dockerfile
 ├── .env
 ├── .gitignore
 ├── docker-compose.yml
+├── docker-compose.yml.example
 └── README.md
 ```
 
@@ -57,6 +62,15 @@ In order to run this CI server on you local machine you would have to complete t
 - You may update the master config source in the `docker-compose.yml` 
   
 More details about `master.cfg` configs here : https://docs.buildbot.net/
+
+
+## Running (Forcing builds)
+
+On the Builders page, click on the name of the build you want to run (example `python-migrations-tests`) link. Click on the force button top right click the `start build` button on the dialog that follows without needing to providing any information :
+
+<a href="https://ibb.co/64RzTyR"><img src="https://i.ibb.co/FBb2yhb/Buildbot-builder-php-runtests.png" alt="Buildbot-builder-php-runtests" border="0"></a>
+
+_If you want to use the builder to run a build using another configuration like another repository you may add the details in the fiels presented._
 
 
 
