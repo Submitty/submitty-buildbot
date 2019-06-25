@@ -31,13 +31,20 @@ In order to run this CI server on you local machine you would have to complete t
 1. Clone project repository
 
    `git clone https://github.com/Submitty/submitty-buildbot.git`
-2. Create project enviroment file
+
+2. Create local base images, run all scripts.
+   
+   - `./build.sh`
+  
+3. Create project enviroment file
    
    `cp .env.example .env`
-3. Create local version of `docker-compose.yml`
+
+4. Create local version of `docker-compose.yml`
    
    `cp .docker-compose.yml.example docker-compose.yml`
-4. Build images
+
+5. Build images
    
    `docker-compose up --build`
 
