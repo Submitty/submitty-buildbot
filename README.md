@@ -12,13 +12,17 @@ Buildbot CI/CD configuration for Submitty.
 │   └── master.cfg
 ├── workers
 │   ├── php
-│   │   ├── buildbot.tac
 │   │   └── Dockerfile
-│   └── python
-│       ├── buildbot.tac
-│       └── Dockerfile
+│   ├── python
+│   │   ├── Dockerfile
+│   │   ├── Dockerfile_Autograder
+│   │   ├── Dockerfile_Migrations
+│   │   └── Dockerfile_Submitty_Utils
+│   ├── buildbot.tac
+│   └── Dockerfile
 ├── .env
 ├── .gitignore
+├── build.sh
 ├── docker-compose.yml
 ├── docker-compose.yml.example
 └── README.md
