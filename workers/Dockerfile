@@ -47,6 +47,9 @@ RUN pip3 install --upgrade pip && \
     useradd -ms /bin/bash buildbot
 
 COPY buildbot.tac /buildbot/buildbot.tac
+COPY autograder.sh ~/autograder.sh
+COPY setup.sh ~/setup.sh
+COPY setup_test_suite.sh ~/setup_test_suite.sh
 
 RUN pip3 install buildbot && \
     pip3 install buildbot-worker && \

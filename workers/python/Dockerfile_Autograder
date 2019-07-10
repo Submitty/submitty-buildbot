@@ -1,1 +1,9 @@
 FROM submitty-python-worker:latest
+
+# Installing required dependencies for autograder
+RUN apt-get install -y python clang default-jre
+
+USER buildbot
+WORKDIR /buildbot
+
+CMD ["/usr/bin/dumb-init", "twistd", "--pidfile=", "-ny", "buildbot.tac"]

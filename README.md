@@ -58,7 +58,7 @@ In order to run this CI server on you local machine you would have to complete t
   
   *master.cfg worker declation*
    ```
-   c['workers'] = [worker.Worker("php-buildbot-worker", 'pass')]
+   c['workers'] = [worker.Worker("php-site-worker", 'pass')]
    ```
 
   *docker-compose.yml environment section*
@@ -66,7 +66,7 @@ In order to run this CI server on you local machine you would have to complete t
       environment:
         BUILDMASTER: buildbot
         BUILDMASTER_PORT: 9989
-        WORKERNAME: php-buildbot-worker
+        WORKERNAME: php-site-worker
         WORKERPASS: pass
    ```
 - You may update the database credentials in the enviroment(`.env`) file 

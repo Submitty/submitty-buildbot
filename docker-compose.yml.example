@@ -13,13 +13,13 @@ services:
       - BUILDBOT_WORKER_PORT=9989
       - BUILDBOT_WEB_URL=http://localhost:8010/
       - BUILDBOT_WEB_PORT=tcp:port=8010
-    
     links:
       - db
     depends_on:
       - db
     ports:
       - "8010:8010"
+
   db:
     image: "postgres:9.4"
     container_name: buildbot-database
@@ -28,20 +28,20 @@ services:
     expose:
       - 5432
 
-  php-worker:
+  php-site-worker:
     build:
         context: workers/php
         dockerfile: Dockerfile
-    container_name: php-buildbot-worker
+    container_name: php-site-worker
     environment:
       BUILDMASTER: buildbot
       BUILDMASTER_PORT: 9989
-      WORKERNAME: php-buildbot-worker
+      WORKERNAME: php-site-worker
       WORKERPASS: pass
       WORKER_ENVIRONMENT_BLACKLIST: DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST
-
     links:
       - buildbot
+
   python-migrator-worker:
     build:
         context: workers/python
@@ -53,9 +53,9 @@ services:
       WORKERNAME: python-migrator-worker
       WORKERPASS: pass
       WORKER_ENVIRONMENT_BLACKLIST: DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST
-
     links:
       - buildbot
+
   python-autograder-worker:
     build:
         context: workers/python
@@ -67,9 +67,9 @@ services:
       WORKERNAME: python-autograder-worker
       WORKERPASS: pass
       WORKER_ENVIRONMENT_BLACKLIST: DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST
-
     links:
       - buildbot
+
   python-submitty-utils-worker:
     build:
         context: workers/python
@@ -81,6 +81,5 @@ services:
       WORKERNAME: python-submitty-utils-worker
       WORKERPASS: pass
       WORKER_ENVIRONMENT_BLACKLIST: DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST
-
     links:
       - buildbot
