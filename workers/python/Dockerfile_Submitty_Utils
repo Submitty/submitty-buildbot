@@ -1,0 +1,16 @@
+FROM submitty-python-worker:latest
+
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Submitty Utils requires php to run.
+RUN apt-get install -y tzdata php-cli
+
+# RUN dpkg-reconfigure --frontend noninteractive tzdata
+
+RUN pip3 install tzlocal
+
+USER buildbot
+WORKDIR /buildbot
+
+CMD ["/usr/bin/dumb-init", "twistd", "--pidfile=", "-ny", "buildbot.tac"]

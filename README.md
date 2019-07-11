@@ -10,12 +10,21 @@ Buildbot CI/CD configuration for Submitty.
 ```
 ├── master
 │   └── master.cfg
-├── worker
+├── workers
+│   ├── php
+│   │   └── Dockerfile
+│   ├── python
+│   │   ├── Dockerfile
+│   │   ├── Dockerfile_Autograder
+│   │   ├── Dockerfile_Migrations
+│   │   └── Dockerfile_Submitty_Utils
 │   ├── buildbot.tac
 │   └── Dockerfile
 ├── .env
 ├── .gitignore
+├── build.sh
 ├── docker-compose.yml
+├── docker-compose.yml.example
 └── README.md
 ```
 
@@ -26,13 +35,20 @@ In order to run this CI server on you local machine you would have to complete t
 1. Clone project repository
 
    `git clone https://github.com/Submitty/submitty-buildbot.git`
-2. Create project enviroment file
+
+2. Create local base images, run all scripts.
+   
+   - `./build.sh`
+  
+3. Create project enviroment file
    
    `cp .env.example .env`
-3. Create local version of `docker-compose.yml`
+
+4. Create local version of `docker-compose.yml`
    
    `cp .docker-compose.yml.example docker-compose.yml`
-4. Build images
+
+5. Build images
    
    `docker-compose up --build`
 
@@ -42,7 +58,7 @@ In order to run this CI server on you local machine you would have to complete t
   
   *master.cfg worker declation*
    ```
-   c['workers'] = [worker.Worker("php-docker-worker", 'pass')]
+   c['workers'] = [worker.Worker("php-buildbot-worker", 'pass')]
    ```
 
   *docker-compose.yml environment section*
@@ -50,13 +66,22 @@ In order to run this CI server on you local machine you would have to complete t
       environment:
         BUILDMASTER: buildbot
         BUILDMASTER_PORT: 9989
-        WORKERNAME: php-docker-worker
+        WORKERNAME: php-buildbot-worker
         WORKERPASS: pass
    ```
 - You may update the database credentials in the enviroment(`.env`) file 
 - You may update the master config source in the `docker-compose.yml` 
   
 More details about `master.cfg` configs here : https://docs.buildbot.net/
+
+
+## Running (Forcing builds)
+
+On the Builders page, click on the name of the build you want to run (example `python-migrations-tests`) link. Click on the force button top right click the `start build` button on the dialog that follows without needing to providing any information :
+
+<a href="https://ibb.co/64RzTyR"><img src="https://i.ibb.co/FBb2yhb/Buildbot-builder-php-runtests.png" alt="Buildbot-builder-php-runtests" border="0"></a>
+
+_If you want to use the builder to run a build using another configuration like another repository you may add the details in the fiels presented._
 
 
 

@@ -19,10 +19,10 @@ ENV         security_updates_as_of 2018-06-15
 # This will make apt-get install without question
 ARG         DEBIAN_FRONTEND=noninteractive
 
-    # Install security updates 
+# Install security updates 
 RUN apt-get update && \
     apt-get -y upgrade 
-    # Install required packages and libraries
+# Install required packages and libraries
 RUN apt-get -y install -q \
     build-essential \
     git \
@@ -33,19 +33,11 @@ RUN apt-get -y install -q \
     python3-setuptools \
     python3-pip \
     curl 
-    # Install PHP and required PHP modules.
-RUN apt-get -y install -q php-cli php-curl php-zip php-mbstring php-xml php7.2-xdebug php7.2-mysql php7.2-sqlite3 
 
-    # Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*  && \
-    # Test runs produce a great quantity of dead grandchild processes.  In a
-    # non-docker environment, these are automatically reaped by init (process 1),
-    # so we need to simulate that here.  See https://github.com/Yelp/dumb-init
-    curl https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64.deb -Lo /tmp/init.deb && dpkg -i /tmp/init.deb
-
-# Install Composer 
-RUN curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer
+# Test runs produce a great quantity of dead grandchild processes.  
+# In a non-docker environment, these are automatically reaped by init (process 1),
+# so we need to simulate that here.  See https://github.com/Yelp/dumb-init
+RUN curl https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64.deb -Lo /tmp/init.deb && dpkg -i /tmp/init.deb
 
 # ubuntu pip version has issues so we should use the official upstream version it: https://github.com/pypa/pip/pull/3287
 RUN pip3 install --upgrade pip && \
@@ -59,8 +51,3 @@ COPY buildbot.tac /buildbot/buildbot.tac
 RUN pip3 install buildbot && \
     pip3 install buildbot-worker && \
     chown -R buildbot /buildbot
-
-USER buildbot
-WORKDIR /buildbot
-
-CMD ["/usr/bin/dumb-init", "twistd", "--pidfile=", "-ny", "buildbot.tac"]
