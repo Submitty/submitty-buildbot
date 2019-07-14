@@ -41,7 +41,7 @@ RUN curl https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.
 
 # ubuntu pip version has issues so we should use the official upstream version it: https://github.com/pypa/pip/pull/3287
 RUN pip3 install --upgrade pip && \
-    # Install required python packages, and twisted
+    # Install required twisted 
     pip --no-cache-dir install twisted && \
     mkdir /buildbot &&\
     useradd -ms /bin/bash buildbot
