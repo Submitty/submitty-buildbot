@@ -1,1 +1,6 @@
 FROM submitty-python-worker:latest
+
+USER buildbot
+WORKDIR /buildbot
+
+CMD ["/usr/bin/dumb-init", "twistd", "--pidfile=", "-ny", "buildbot.tac"]
