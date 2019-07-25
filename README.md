@@ -54,12 +54,14 @@ In order to run this CI server on you local machine you would have to complete t
 
 #### Customize
 
-- You may change the worker password in `master/master.cfg` and the `WORKERPASS` property in the `environment` section of `docker-compose.yml`
-  
-  *master.cfg worker declation*
-   ```
-   c['workers'] = [worker.Worker("php-buildbot-worker", 'pass')]
-   ```
+- You may change the worker password via the `WORKERPASS` property in the `environment` section of `docker-compose.yml` and in `master/master.cfg`. 
+
+    *master.cfg worker declation*
+      ```
+      c['workers'] = [worker.Worker("php-buildbot-worker", 'pass')]
+      ```
+
+- The `environment` component in `docker-compose.yml` takes precedence over the variables set in `.env`. Should you wish to use `.env` exclusively take off the environment section in the worker service and add the appropriate variables names to `.env`. 
 
   *docker-compose.yml environment section*
    ```
@@ -69,7 +71,22 @@ In order to run this CI server on you local machine you would have to complete t
         WORKERNAME: php-buildbot-worker
         WORKERPASS: pass
    ```
-- You may update the database credentials in the enviroment(`.env`) file 
+
+- Security tokens and inter-worker environment variables do not live in `docker-compose.yml` but in `.env` so make sure you add the appropriate tokens in `.env`
+
+  *.env*
+  
+  ```
+    POSTGRES_PASSWORD=change_me
+    POSTGRES_USER=buildbot
+    POSTGRES_DB=buildbot
+    # in master.cfg, this variable is str.format()ed with the environment variables
+    BUILDBOT_DB_URL=postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db/{POSTGRES_DB}
+    # Tokens
+    GITHUB_STATUS_API_TOKEN=change_me_and_keep_me_local
+  ```
+  
+- You may also update the database credentials in the enviroment(`.env`) file 
 - You may update the master config source in the `docker-compose.yml` 
   
 More details about `master.cfg` configs here : https://docs.buildbot.net/
