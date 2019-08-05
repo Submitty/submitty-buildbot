@@ -8,7 +8,7 @@ RUN apt-get install -y tzdata php-cli
 
 # RUN dpkg-reconfigure --frontend noninteractive tzdata
 
-RUN pip3 install tzlocal
+RUN pip3 install tzlocal jsonschema jsonref
 
 
 ENV COVERAGE_FILE /buildbot/python-submitty-utils-tests/build/python_submitty_utils/.coverage.utils
