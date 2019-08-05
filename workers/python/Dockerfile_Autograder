@@ -1,5 +1,7 @@
 FROM submitty-python-worker:latest
 
+ENV COVERAGE_FILE /buildbot/python-migrations-tests/build/autograder/.coverage.autograder
+
 USER buildbot
 WORKDIR /buildbot
 

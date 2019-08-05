@@ -10,6 +10,9 @@ RUN apt-get install -y tzdata php-cli
 
 RUN pip3 install tzlocal
 
+
+ENV COVERAGE_FILE /buildbot/python-migrations-tests/build/python_submitty_utils/.coverage.utils
+
 USER buildbot
 WORKDIR /buildbot
 
