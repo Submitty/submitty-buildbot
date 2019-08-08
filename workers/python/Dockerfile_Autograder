@@ -3,4 +3,6 @@ FROM submitty-python-worker:latest
 USER buildbot
 WORKDIR /buildbot
 
+RUN pip3 install docker
+
 CMD ["/usr/bin/dumb-init", "twistd", "--pidfile=", "-ny", "buildbot.tac"]
