@@ -24,6 +24,8 @@ services:
     container_name: buildbot-database
     env_file:
       - .env
+    volumes:
+      - ./data:/var/lib/postgresql/data
     expose:
       - 5432
 
