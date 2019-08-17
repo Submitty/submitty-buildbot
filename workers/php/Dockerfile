@@ -5,7 +5,7 @@ FROM submitty-base-worker:latest
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install PHP and required PHP modules.
-RUN apt-get -y install -q php-cli php-curl php-zip php-mbstring php-xml php7.2-xdebug php7.2-mysql php7.2-sqlite3 
+RUN apt-get -y install -q php-cli php-curl php-zip php-mbstring php-xml php7.2-xdebug php7.2-mysql php7.2-sqlite3 php7.2-ds
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*  
