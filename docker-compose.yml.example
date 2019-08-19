@@ -61,6 +61,10 @@ services:
         context: workers/python
         dockerfile: Dockerfile_Autograder
     container_name: python-autograder-worker
+    volumes:
+      - ./workers/autograder.sh:/buildbot/python-autograder-tests/autograder.sh
+      - ./workers/setup.sh:/buildbot/python-autograder-tests/setup.sh
+      - ./workers/setup_test_suite.sh:/buildbot/python-autograder-tests/setup_test_suite.sh
     environment:
       BUILDMASTER: buildbot
       BUILDMASTER_PORT: 9989
