@@ -8,7 +8,7 @@ RUN apt-get install -y tzdata php-cli
 
 # RUN dpkg-reconfigure --frontend noninteractive tzdata
 
-RUN pip3 install tzlocal
+RUN pip3 install tzlocal jsonschema jsonref
 
 USER buildbot
 WORKDIR /buildbot

@@ -11,7 +11,6 @@ services:
       - BUILDBOT_CONFIG_DIR=master
       #- BUILDBOT_CONFIG_URL=https://raw.githubusercontent.com/Submitty/submitty-buildbot/master/master/master.cfg?token=
       - BUILDBOT_WORKER_PORT=9989
-      - BUILDBOT_WEB_URL=http://localhost:8010/
       - BUILDBOT_WEB_PORT=tcp:port=8010
     
     links:
@@ -25,6 +24,8 @@ services:
     container_name: buildbot-database
     env_file:
       - .env
+    volumes:
+      - ./data:/var/lib/postgresql/data
     expose:
       - 5432
 
