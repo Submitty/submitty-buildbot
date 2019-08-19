@@ -14,6 +14,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer
 
+COPY php_syntax_lint.py /buildbot/php_syntax_lint.py
+
 USER buildbot
 WORKDIR /buildbot
 
